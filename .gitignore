@@ -219,3 +219,6 @@ __marimo__/
 
 # Credenciales SQL
 credenciales.py
+
+#Creedenciales API AEMET
+apikey.env
