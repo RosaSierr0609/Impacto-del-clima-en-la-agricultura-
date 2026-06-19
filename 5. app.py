@@ -12,6 +12,25 @@ st.set_page_config(
     layout="wide"
 )
 
+st.markdown("""
+    <style>
+    [data-testid="stSidebar"] {
+        background-color: #c8dfc0;
+    }
+    .stApp {
+        background-color: #fffff0;
+    }
+    [data-testid="stSidebar"] * {
+        color: #4a3728 !important;
+    }
+    h1, h2, h3, p, li, div {
+        color: #4a3728 !important;
+    }
+    header[data-testid="stHeader"] {
+        background-color: #c8dfc0;
+    }
+    </style>
+""", unsafe_allow_html=True)
 
 @st.cache_data
 def cargar_datos():
@@ -19,7 +38,6 @@ def cargar_datos():
 
 df = cargar_datos()
 
-# Grupos de cultivos
 cereales = ["TRIGO DURO", "TRIGO BLANDO Y SEMIDURO", "CEBADA DE 2 CARRERAS",
             "CEBADA DE 6 CARRERAS", "AVENA", "MAIZ", "TRITICALE"]
 aceitunas = ["ACEITUNA DE MESA", "ACEITUNA DE DOBLE APTITU", "ACEITUNA DE ALMAZARA"]
@@ -38,14 +56,6 @@ pagina = st.sidebar.radio(
     ["🏠 Inicio", "📊 EDA", "🔮 Predicción", "🌡️ Importancia de variables"]
 )
 
-# Filtro global
-grupo_seleccionado = st.sidebar.selectbox(
-    "Grupo de cultivo",
-    ["Cereales", "Olivar", "Viñedo", "Cítricos"]
-)
-
-df_grupo = df[df["Cultivo"].isin(grupos[grupo_seleccionado])].copy()
-
 if pagina == "🏠 Inicio":
     st.title("🌾 Impacto del Clima en la Agricultura Española")
     st.markdown("""
@@ -60,7 +70,12 @@ if pagina == "🏠 Inicio":
 
 elif pagina == "📊 EDA":
     st.header("📊 Evolución histórica")
-    
+    grupo_seleccionado = st.selectbox(
+        "Grupo de cultivo",
+        ["Cereales", "Olivar", "Viñedo", "Cítricos"]
+    )
+    df_grupo = df[df["Cultivo"].isin(grupos[grupo_seleccionado])].copy()
+
     df_evolucion = df_grupo.groupby("Anio")["Hectareas"].sum().reset_index()
     fig = px.line(df_evolucion, x="Anio", y="Hectareas",
                   title=f"Evolución de hectáreas - {grupo_seleccionado}",
@@ -82,9 +97,12 @@ elif pagina == "📊 EDA":
                            labels={"Anio": "Año", "Precipitacion": "mm"})
         st.plotly_chart(fig_prec, use_container_width=True)
 
-
 elif pagina == "🔮 Predicción":
     st.header("🔮 Predicción hasta 2029")
+    grupo_seleccionado = st.selectbox(
+        "Grupo de cultivo",
+        ["Cereales", "Olivar", "Viñedo", "Cítricos"]
+    )
 
     @st.cache_data
     def predecir(cultivos_grupo):
@@ -121,9 +139,12 @@ elif pagina == "🔮 Predicción":
                             xaxis_title="Año", yaxis_title="Hectáreas")
     st.plotly_chart(fig_pred, use_container_width=True)
 
-
 elif pagina == "🌡️ Importancia de variables":
     st.header("🌡️ Importancia de variables climáticas")
+    grupo_seleccionado = st.selectbox(
+        "Grupo de cultivo",
+        ["Cereales", "Olivar", "Viñedo", "Cítricos"]
+    )
 
     features = ["Temp_media", "Temp_min", "Temp_max", "Precipitacion",
                 "PRECTOTCORR", "T2M", "T2M_MAX", "T2M_MIN"]
