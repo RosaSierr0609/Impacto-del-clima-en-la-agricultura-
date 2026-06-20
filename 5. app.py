@@ -15,8 +15,15 @@ st.set_page_config(
 st.markdown("""
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap');
-    *:not([data-testid="stSidebarCollapseButton"]):not(.material-symbols-rounded){
+    h1, h2, h3, h4, h5, h6, p, li, label, div, span.st-emotion-cache, 
+    button, input, select, textarea {
         font-family: 'Montserrat', sans-serif !important;
+    }
+    [data-testid="stSidebarCollapseButton"] * {
+    font-family: 'Material Symbols Rounded' !important;
+    }
+    [data-testid="stSidebarCollapseButton"] span {
+        font-family: 'Material Symbols Rounded' !important;
     }
     .material-symbols-rounded {
         font-family: 'Material Symbols Rounded' !important;
@@ -37,11 +44,10 @@ st.markdown("""
         background-color: #c8dfc0;
     }
     [data-testid="stSidebar"] .stRadio {
-    margin-top: 50px;
+    margin-top: 100px;
     }
     [data-testid="stSidebar"] .stRadio label p {
         font-size: 18px !important;
-        font-weight: bold !important;
         padding: 8px 0px !important;
     }
     </style>
@@ -66,25 +72,33 @@ grupos = {
     "Cítricos": citricos
 }
 
+st.sidebar.markdown("""
+    <div style='position: fixed; bottom: 30px; font-size: 11px; color: #4a3728; opacity: 0.6; text-align: center;'>
+        🌿 Agricultura & Clima · 2026
+    </div>
+""", unsafe_allow_html=True)
+
 pagina = st.sidebar.radio(
-    "Navegación",
-    ["🏠 Inicio", "📊 EDA", "🔮 Predicción", "🌡️ Importancia de variables"]
+    "Secciones",
+    ["Sobre el análisis", "Tendencias históricas", "¿Qué nos espera?", "Factores climáticos"]
 )
 
-if pagina == "🏠 Inicio":
+if pagina == "Sobre el análisis":
     st.title("🌾 Impacto del Clima en la Agricultura Española")
     st.markdown("""
-    Este proyecto analiza cómo el cambio climático ha afectado a los principales 
+    *Este proyecto analiza cómo el cambio climático ha afectado a los principales 
     cultivos de España entre 2005 y 2024, y predice la evolución de la superficie 
-    cultivada hasta 2029.
+    cultivada hasta 2029.*
     
     **Cultivos analizados:** Cereales, Olivar, Viñedo y Cítricos  
     **Provincias:** Valladolid, Valencia, Jaén y La Rioja  
     **Fuentes:** ESYRCE, AEMET, NASA, FAOSTAT
     """)
 
-elif pagina == "📊 EDA":
-    st.header("📊 Evolución histórica")
+elif pagina == "Tendencias históricas":
+    st.header("Evolución histórica")
+    st.markdown("*Descubre cómo ha cambiado la superficie dedicada a cada cultivo en España a lo largo de los últimos 20 años, " \
+    "y cómo han evolucionado la temperatura y las lluvias en ese mismo período.*")
     grupo_seleccionado = st.selectbox(
         "Grupo de cultivo",
         ["Cereales", "Olivar", "Viñedo", "Cítricos"]
@@ -112,8 +126,10 @@ elif pagina == "📊 EDA":
                            labels={"Anio": "Año", "Precipitacion": "mm"})
         st.plotly_chart(fig_prec, use_container_width=True)
 
-elif pagina == "🔮 Predicción":
-    st.header("🔮 Predicción hasta 2029")
+elif pagina == "¿Qué nos espera?":
+    st.header("Pronóstico hasta 2029")
+    st.markdown("*¿Cuántas hectáreas habrá de cada cultivo en los próximos años? Este modelo aprende de los datos históricos" \
+    " y del clima para estimar la tendencia futura hasta 2029. La zona sombreada muestra el rango de posibles valores.*")
     grupo_seleccionado = st.selectbox(
         "Grupo de cultivo",
         ["Cereales", "Olivar", "Viñedo", "Cítricos"]
@@ -154,8 +170,10 @@ elif pagina == "🔮 Predicción":
                             xaxis_title="Año", yaxis_title="Hectáreas")
     st.plotly_chart(fig_pred, use_container_width=True)
 
-elif pagina == "🌡️ Importancia de variables":
-    st.header("🌡️ Importancia de variables climáticas")
+elif pagina == "Factores climáticos":
+    st.header("Importancia de variables climáticas")
+    st.markdown("*No todos los factores climáticos afectan igual a cada cultivo. Aquí puedes ver qué variables del clima, como la temperatura o las lluvias, " \
+    "tienen más peso a la hora de explicar los cambios en la superficie cultivada.*")
     grupo_seleccionado = st.selectbox(
         "Grupo de cultivo",
         ["Cereales", "Olivar", "Viñedo", "Cítricos"]
