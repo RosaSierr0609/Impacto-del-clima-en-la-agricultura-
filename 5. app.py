@@ -14,6 +14,13 @@ st.set_page_config(
 
 st.markdown("""
     <style>
+    @import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap');
+    *:not([data-testid="stSidebarCollapseButton"]):not(.material-symbols-rounded){
+        font-family: 'Montserrat', sans-serif !important;
+    }
+    .material-symbols-rounded {
+        font-family: 'Material Symbols Rounded' !important;
+    }
     [data-testid="stSidebar"] {
         background-color: #c8dfc0;
     }
@@ -28,6 +35,14 @@ st.markdown("""
     }
     header[data-testid="stHeader"] {
         background-color: #c8dfc0;
+    }
+    [data-testid="stSidebar"] .stRadio {
+    margin-top: 50px;
+    }
+    [data-testid="stSidebar"] .stRadio label p {
+        font-size: 18px !important;
+        font-weight: bold !important;
+        padding: 8px 0px !important;
     }
     </style>
 """, unsafe_allow_html=True)
