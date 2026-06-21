@@ -49,6 +49,11 @@ st.markdown("""
     [data-testid="stSidebar"] .stRadio label p {
         font-size: 18px !important;
         padding: 8px 0px !important;
+    }   
+    [data-testid="stSidebar"] .stRadio label {
+        display: flex;
+        align-items: center;
+        gap: 8px;
     }
     </style>
 """, unsafe_allow_html=True)
@@ -73,7 +78,7 @@ grupos = {
 }
 
 st.sidebar.markdown("""
-    <div style='position: fixed; bottom: 30px; font-size: 11px; color: #4a3728; opacity: 0.6; text-align: center;'>
+    <div style='position: fixed; bottom: 40px; font-size: 14px; color: #4a3728; opacity: 0.6; text-align: center;'>
         🌿 Agricultura & Clima · 2026
     </div>
 """, unsafe_allow_html=True)
@@ -92,7 +97,11 @@ if pagina == "Sobre el análisis":
     
     **Cultivos analizados:** Cereales, Olivar, Viñedo y Cítricos  
     **Provincias:** Valladolid, Valencia, Jaén y La Rioja  
-    **Fuentes:** ESYRCE, AEMET, NASA, FAOSTAT
+    **Fuentes:** 
+    - **ESYRCE** (Encuesta sobre Superficies y Rendimientos de Cultivos): datos de hectáreas cultivadas por provincia y cultivo en España
+    - **AEMET** (Agencia Estatal de Meteorología): registros históricos de temperatura y precipitación de estaciones meteorológicas españolas
+    - **NASA** (POWER Project): datos climáticos satelitales a nivel nacional
+    - **FAOSTAT** (Organización de las Naciones Unidas para la Alimentación): estadísticas de producción agrícola a nivel mundial
     """)
 
 elif pagina == "Tendencias históricas":
@@ -107,23 +116,26 @@ elif pagina == "Tendencias históricas":
 
     df_evolucion = df_grupo.groupby("Anio")["Hectareas"].sum().reset_index()
     fig = px.line(df_evolucion, x="Anio", y="Hectareas",
-                  title=f"Evolución de hectáreas - {grupo_seleccionado}",
-                  labels={"Anio": "Año", "Hectareas": "Hectáreas"})
+              title=f"Evolución de hectáreas - {grupo_seleccionado}",
+              labels={"Anio": "Año", "Hectareas": "Hectáreas"},
+              height=300)
     st.plotly_chart(fig, use_container_width=True)
 
     col1, col2 = st.columns(2)
     with col1:
         df_temp = df_grupo.groupby("Anio")["Temp_media"].mean().reset_index()
         fig_temp = px.line(df_temp, x="Anio", y="Temp_media",
-                           title="Temperatura media por año",
-                           labels={"Anio": "Año", "Temp_media": "°C"})
+                   title="Temperatura media por año",
+                   labels={"Anio": "Año", "Temp_media": "°C"},
+                   height=250)
         st.plotly_chart(fig_temp, use_container_width=True)
 
     with col2:
         df_prec = df_grupo.groupby("Anio")["Precipitacion"].mean().reset_index()
         fig_prec = px.line(df_prec, x="Anio", y="Precipitacion",
-                           title="Precipitación media por año",
-                           labels={"Anio": "Año", "Precipitacion": "mm"})
+                   title="Precipitación media por año",
+                   labels={"Anio": "Año", "Precipitacion": "mm"},
+                   height=250)
         st.plotly_chart(fig_prec, use_container_width=True)
 
 elif pagina == "¿Qué nos espera?":
@@ -179,8 +191,7 @@ elif pagina == "Factores climáticos":
         ["Cereales", "Olivar", "Viñedo", "Cítricos"]
     )
 
-    features = ["Temp_media", "Temp_min", "Temp_max", "Precipitacion",
-                "PRECTOTCORR", "T2M", "T2M_MAX", "T2M_MIN"]
+    features = ["Temp_media", "Temp_min", "Temp_max", "Precipitacion"]
 
     @st.cache_data
     def calcular_importancia(cultivos_grupo):
@@ -195,6 +206,14 @@ elif pagina == "Factores climáticos":
         }).sort_values("Importancia", ascending=True)
 
     importancia = calcular_importancia(tuple(grupos[grupo_seleccionado]))
+
+    nombres_variables = {
+        "Temp_media": "Temperatura media (AEMET)",
+        "Temp_min": "Temperatura mínima (AEMET)",
+        "Temp_max": "Temperatura máxima (AEMET)",
+        "Precipitacion": "Precipitación (AEMET)"
+    }
+    importancia["Variable"] = importancia["Variable"].map(nombres_variables)
 
     fig_imp = px.bar(
         importancia,
