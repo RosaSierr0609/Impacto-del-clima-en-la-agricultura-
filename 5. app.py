@@ -116,7 +116,7 @@ elif pagina == "Tendencias históricas":
 
     df_evolucion = df_grupo.groupby("Anio")["Hectareas"].sum().reset_index()
     fig = px.line(df_evolucion, x="Anio", y="Hectareas",
-              title=f"Evolución de hectáreas - {grupo_seleccionado}",
+              title=f"Evolución de hectáreas - {grupo_seleccionado} (en millones)",
               labels={"Anio": "Año", "Hectareas": "Hectáreas"},
               height=300)
     st.plotly_chart(fig, use_container_width=True)
@@ -125,7 +125,7 @@ elif pagina == "Tendencias históricas":
     with col1:
         df_temp = df_grupo.groupby("Anio")["Temp_media"].mean().reset_index()
         fig_temp = px.line(df_temp, x="Anio", y="Temp_media",
-                   title="Temperatura media por año",
+                   title="Temperatura media por año (en grados Celsius)",
                    labels={"Anio": "Año", "Temp_media": "°C"},
                    height=250)
         st.plotly_chart(fig_temp, use_container_width=True)
@@ -133,7 +133,7 @@ elif pagina == "Tendencias históricas":
     with col2:
         df_prec = df_grupo.groupby("Anio")["Precipitacion"].mean().reset_index()
         fig_prec = px.line(df_prec, x="Anio", y="Precipitacion",
-                   title="Precipitación media por año",
+                   title="Precipitación media por año (en milimetros anuales)",
                    labels={"Anio": "Año", "Precipitacion": "mm"},
                    height=250)
         st.plotly_chart(fig_prec, use_container_width=True)
