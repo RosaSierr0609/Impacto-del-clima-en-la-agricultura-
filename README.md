@@ -2,6 +2,11 @@
 
 > Análisis y predicción de la superficie cultivada de los principales cultivos españoles mediante variables climáticas (2005-2024)
 
+## 🌐 Aplicación
+
+Accede a la aplicación interactiva en:
+👉 [https://tuusuario-proyecto.streamlit.app](https://tuusuario-proyecto.streamlit.app)
+
 ## 📋 Descripción
 
 Este proyecto analiza cómo el cambio climático ha afectado a los principales cultivos de España entre 2005 y 2024, e integra datos de múltiples fuentes oficiales para construir un pipeline completo de extracción, procesamiento, análisis y predicción, culminando en una aplicación interactiva desarrollada con Streamlit.
@@ -57,6 +62,7 @@ Este proyecto analiza cómo el cambio climático ha afectado a los principales c
 │   ├── FAOSTAT_procesado.csv
 │   └── NASA_procesado.csv
 │
+├── requirements.txt                        # Dependencias del proyecto
 ├── credenciales.py                         # Config BD (no compartir)
 ├── apikey.env                              # API keys (no compartir)
 └── LICENSE
@@ -76,6 +82,11 @@ python -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
 ```
+
+> Si necesitas regenerar el archivo `requirements.txt`:
+> ```bash
+> pip freeze > requirements.txt
+> ```
 
 3. Configurar credenciales:
    - Obtener API key en [AEMET OpenData](https://www.aemet.es/es/datos_abiertos) y añadirla en `apikey.env`
@@ -126,7 +137,7 @@ MIT License. Ver archivo [LICENSE](LICENSE) para detalles.
 
 ## ✍️ Autor
 
-Rosa Sierra · Junio 2026
+Rosa Sierra· Junio 2026
 
 ---
 
