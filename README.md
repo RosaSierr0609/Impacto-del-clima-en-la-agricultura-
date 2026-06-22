@@ -126,7 +126,7 @@ MIT License. Ver archivo [LICENSE](LICENSE) para detalles.
 
 ## ✍️ Autor
 
-Proyecto de fin de bootcamp de análisis de datos · Junio 2026
+Rosa Sierra · Junio 2026
 
 ---
 
