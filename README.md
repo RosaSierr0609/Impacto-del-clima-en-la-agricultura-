@@ -5,7 +5,7 @@
 ## 🌐 Aplicación
 
 Accede a la aplicación interactiva en:
-👉 [https://tuusuario-proyecto.streamlit.app](https://tuusuario-proyecto.streamlit.app)
+👉 [https://k5vk467mndl4bcv9vsshsc.streamlit.app]
 
 ## 📋 Descripción
 
