@@ -28,6 +28,8 @@ Este proyecto analiza cómo el cambio climático ha afectado a los principales c
 | **FAOSTAT** | Base de datos FAO - Producción agrícola España | Descarga directa (fao.org) | Nacional por cultivo |
 | **ESYRCE** | Encuesta sobre Superficies y Rendimientos de Cultivos | Descarga directa (mapa.gob.es) | Provincial por cultivo |
 
+> **Nota**: FAOSTAT y NASA se analizaron en el EDA pero no se incorporaron al modelo predictivo. FAOSTAT tiene datos solo a nivel nacional (no provincial) y NASA resultó menos representativa que AEMET para el análisis agrícola provincial en España.
+
 ## 🌿 Cultivos analizados
 
 - **Cereales**: Trigo, Cebada, Avena, Maíz, Triticale
