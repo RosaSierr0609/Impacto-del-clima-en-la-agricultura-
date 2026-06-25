@@ -5,6 +5,7 @@ import plotly.express as px
 import plotly.graph_objects as gos
 from prophet import Prophet
 from sklearn.ensemble import RandomForestRegressor
+import plotly.graph_objects as go
 
 st.set_page_config(
     page_title="Impacto del Clima en la Agricultura Española",
@@ -100,8 +101,6 @@ if pagina == "Sobre el análisis":
     **Fuentes:** 
     - **ESYRCE** (Encuesta sobre Superficies y Rendimientos de Cultivos): datos de hectáreas cultivadas por provincia y cultivo en España
     - **AEMET** (Agencia Estatal de Meteorología): registros históricos de temperatura y precipitación de estaciones meteorológicas españolas
-    - **NASA** (POWER Project): datos climáticos satelitales a nivel nacional
-    - **FAOSTAT** (Organización de las Naciones Unidas para la Alimentación): estadísticas de producción agrícola a nivel mundial
     """)
 
 elif pagina == "Tendencias históricas":
